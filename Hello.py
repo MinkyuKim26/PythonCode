@@ -655,3 +655,239 @@ Practice code
 # a[1] = 4 #a가 가리키는 리스트의 두번째 요솟값을 4로 변경
 # print(b) #a와 같은 리스트를 가리키고 있으니 [1,4,3]을 출력
 #연습문제============================================================
+#if문===============================================================
+# money = True
+# if money:#money가 True면
+#     print("택시를 타고 가라")#이거 출력. money=True이므로 이 문구가 출력 된다.
+# else:#False면
+#     print("걸어가라")#이거 출력.
+#if의 조건에 따라 수행할 문장은 들여쓰기를 해야한다. 
+#들여쓰기를 하지 않을 경우 에러가 발생
+#들여쓰기는 공백(space bar) 4개를 하는 것을 권장한다고 한다.
+#조건문 다음에 ':'을 붙혀야한다. 이는 파이썬의 문법 구조다. 
+# a = 4
+# print(a > b)# true 출력
+# 조건문 예제
+# money = 2000
+# if money >= 3000:# (money>=3000)이 True면
+#     print("택시 타라")# 이거 출력
+# else:#False면
+#     print("걸어 가라")# 이거 출력. money=2000이기에 이거 출력됨.
+# or연산자 사용 예제
+# money = 2000
+# card = True
+# if money >= 3000 or card:# (money>=3000)거나 card = True일 때
+#     print("택시 타라")# 이거 출력. 실제로 이거 출력
+# else:#False면
+#     print("걸어 가라")# 이거 출력. 
+#x in s, x not in s(파이썬만 가지고 있는 조건문)
+# x in 리스트, x not in 리스트
+# x in 튜플, x not in 튜플
+# x in 문자열, x not in 문자열
+# b = 1 in [1,2,3]# [1,2,3] 안에 1이 있는가? -> True
+# print(b)
+# b = 1 not in [1,2,3]# [1,2,3] 안에 1이 없는가? -> False
+# print(b)
+# #튜플 
+# c = 'a' in ('a', 'b', 'c')
+# print(c)
+# #문자열
+# d = 'j' not in 'python'
+# print(d)
+# pocket = ['paper', 'cellphone', 'money']
+# if 'money' in pocket:# pocket 리스트에 'money'가 있는가?
+#     print("택시를 타고 가라")#있으니까 이거 출력
+# else:
+#     print("걸어가라")
+#조건문 넘기기
+# pocket = ['paper', 'cellphone', 'money']
+# if 'money' in pocket:# pocket 리스트에 'money'가 있는가?
+#     pass#pass가 있으면 조건이 True여도 넘어감
+# else:
+#     print("카드를 꺼내라")
+# elif
+# C, C++의 else if 역할을 한다. 
+# pocket = ['paper', 'cellphone']
+# card = True
+# if 'money' in pocket:# 포켓에 돈이 있으면
+#     print("택시를 타고 가라")# 이거 출력
+# elif card:# 돈은 없는데 카드가 있다면
+#     print("택시를 타고 가라") #이거 출력. 실제로 이거 출력.
+# else:#둘다 없으면
+#     print("걸어 가라")# 이거 출력
+#조건부 표현식
+score = 60
+# if score >= 60:
+#     message = "success"
+# else:
+#     message = "failure"
+#위 코드를
+# message = "success" if score >= 60 else "failure"
+#와 같이 한 줄로 표현 가능(조건문이 참인 경우 if 조건문 else 조건문이 거짓인 경우)
+#조건부 표현식은 가독성에 유리하고 한 줄로 작성할 수 있어 활용성이 좋다.
+#if문===============================================================
+#while문============================================================
+# treeHit = 0
+# while treeHit < 10:# treeHit이 10보다 작을 때까지 반복문 실행
+#     treeHit = treeHit + 1
+#     print("나무를 %d번 찍었다." %treeHit)
+#     if treeHit == 10:
+#         print("나무 넘어갑니다")
+# prompt = """
+# 1. Add
+# 2. Del
+# 3. List
+# 4. Quit
+
+# Enter number : """
+# number = 0
+# while(number != 4):
+#     print(prompt)
+#     number = int(input())# 사용자의 숫자 입력을 받아들인다.
+#while문 강제 중지(break)
+# coffee = 10
+# money = 300
+# while money:
+#     print("돈을 받았으니 커피를 줍시다.")
+#     coffee = coffee - 1
+#     print("남은 커피의 양은 %d입니다." %coffee)
+#     if(coffee == 0):
+#         print("커피가 다 떨어졌습니다. 판매를 중지합니다.")
+#         break
+# coffee = 10
+# while True:
+#     money = int(input("돈을 넣어주세요: "))# 값을 입력받는 부분. 입력받은 숫자를 money에 대입
+#     if money == 300:
+#         print("커피를 줍니다")
+#         coffee = coffee - 1
+#     elif money > 300:
+#         print("거스름돈 %d를 주고 커피를 줍니다." %(money - 300))
+#         coffee = coffee - 1
+#     else:
+#         print("돈을 다시 돌려주고 커피를 주지 않습니다.")
+#         print("남은 커피의 양은 %d개 입니다." %coffee)
+#     if coffee == 0:
+#         print("판매를 중단합니다.")
+#         break;
+#while문의 맨 처음으로 돌아가기
+#while문을 빠져나가지 않고 맨 처음으로 다시 돌아가는 법
+# a = 0
+# while a<10:
+#     a = a + 1
+#     if a%2 == 0: continue #continue문을 사용하면 while 문의 맨 맨 처음으로 돌아간다. 
+#     print(a)
+#나 혼자 코딩! p136
+a = 0
+# while a<10:
+#     a = a + 1
+#     if a%3 == 0: continue #continue문을 사용하면 while 문의 맨 맨 처음으로 돌아간다. 
+#     print(a)
+#while문============================================================
+#for문============================================================
+#파이썬의 직관적 특징을 가장 잘 대변해주는 것
+#전형적인 for문
+# test_list = ['one', 'two', 'three']
+# for i in test_list: #리스트 속 요소 중 'one'이 먼저 i에 대입
+#     print(i) #one, two, three출력
+#사용 예제2
+# a = [(1,2), (3,4), (5,6)]
+# for (first, last) in a: #a 리트의 요소값이 튜플이라 각각 요소가 자동으로 (first, last)변수에 대입
+#     print(first + last)
+#사용 예제3
+# marks = [90, 25, 67, 45, 80]
+# num  = 0
+# for score in marks: 
+#     num = num + 1
+#     if score > 60:
+#         print("%d번 학생은 합격" %num)
+#     else:
+#         print("%d번 학생은 불합격" %num)
+#리스트의 마지막 부분까지 가리켰다는 걸 판단한다는 것이 신기하다.
+#그리고 score에 mark의 요소값을 넣는다는 것도 신기하다. c, c++의 for문과는 비교도 안되는 강력함이라 생각한다. 
+#continue
+# marks = [90, 25, 67, 45, 80]
+# num = 0
+# for score in marks:
+#     num = num + 1
+#     if(score < 60): continue
+#     else: 
+#         print("%d번 학생 축하합니다. 합격입니다." %num)
+#range() : 숫자 리스트를 자동으로 만들어줌
+# a = list(range(10))#이렇게 리스트화 해서 사용할 수도 있다. 이렇게 사용하지 않아도 된다.
+# print(a)
+#사용 예제
+# add = 0
+# for i in range(1, 11):
+#     add = add + i
+# print(add)
+#사용 예제 2
+# marks = [90, 25, 67, 45, 80]
+# for num in range(len(marks)):#range(len(marks))는 range(5)가 될 것이며 이 범위는 0~4다.
+#     if(marks[num]) > 60: print("%d번 학생 축하합니다. 합격입니다." %(num + 1))
+#     else: continue
+#for문과 range()를 이용한 구구단
+# for i in range(2, 10):
+#     for j in range(1, 10):
+#         print(i * j, end=" ")#end=" "는 결괏값을 출력할 때 줄바꿈 하지 말라고 넣어둔 것이다.
+#     print('')
+# 리스트 내포 - 리스트 안에 for문을 포함
+#리스트 내포를 사용하지 않은 예
+# a = [1,2,3,4]
+# result = []
+# for num in a:#a안에 있는 num을 하나씩 가리킨다.
+#     result.append(num * 3)#num의 요솟값을 3씩 곱해 result안에 넣어줌
+# print(result)#결과값 [3,6,9,12]출력
+#리스트 내포를 사용한 예
+# a = [1,2,3,4]
+# result = [num * 3 for num in a]#리스트 내포. a 안에 있는 요소값들을 3씩 곱한걸 요소값으로 쓰겠다.
+# print(result)
+#리스트 요소 + 조건문
+# a = [1,2,3,4]
+# result = [num * 3 for num in a if num % 2 == 0]# [1,2,3,4] 중 짝수에만 3을 곱해 result에 담겠다.
+# print(result)
+#리스트 내포의 일반 문법 : [표현식 for 항목 in 반복 가능 객체 if 조건]
+#for문을 여러개 사용할 수도 있다. 
+#구구단을 리스트 안에 넣는 예
+# result = [x * y for x in range(2, 10)
+# for y in range(1, 10)]
+# print(result)
+#for문============================================================
+#연습문제===========================================================
+#문제 1(코드 결과값)
+# a = "Life is too short, you need python"
+
+# if "wife" in a:print("wife")
+# elif "python" in a and "you" not in a: print("python")
+# elif "shirt" not in a: print("shirt")#이거 출력
+# elif "need" in a: print("need")#얘도 True지만 위에서 True인 조건문이 있었기에 여기에 오질 못했다.
+# else: print("none")
+#문제 2(1~1000의 자연수 중 3의 배수의 합)
+# result = 0
+# i = 1
+# while i<= 1000:
+#     if i % 3 == 0:
+#         result +=i
+#     i += 1
+# print(result)
+# 문제 3(while문을 사용해 피라미드 제작)
+# i = 0
+# while(True):
+#     i +=1
+#     if(i > 5): break
+#     print('*' * i)
+#문제 4(for문을 사용해 1~100까지의 숫자 출력)
+# for i in range(1, 101):
+#     print(i)
+#문제 5(평균 점수 구하기)
+# A = [70, 60, 55, 75, 95, 90, 80, 80, 85, 100]
+# total = 0
+# for score in A:
+#     total += score
+# average = total / len(A)
+# print(average)
+#문제 6(리스트 내포를 사용해 홀수에만 2를 곱해 저장하는 리스트 생성)
+# numbers = [1,2,3,4,5]
+# result = [num * 2 for num in numbers if num % 2 == 0]
+# # 넣을 값 : num * 2. num은 누구? numbers의 요솟값. 넣을 조건은? num % 2 == 0 을 성립하는 num만 넣을 것
+# print(result)
+#연습문제===========================================================
