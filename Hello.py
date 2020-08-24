@@ -666,6 +666,7 @@ Practice code
 #들여쓰기는 공백(space bar) 4개를 하는 것을 권장한다고 한다.
 #조건문 다음에 ':'을 붙혀야한다. 이는 파이썬의 문법 구조다. 
 # a = 4
+# b = 2
 # print(a > b)# true 출력
 # 조건문 예제
 # money = 2000
@@ -891,3 +892,141 @@ a = 0
 # # 넣을 값 : num * 2. num은 누구? numbers의 요솟값. 넣을 조건은? num % 2 == 0 을 성립하는 num만 넣을 것
 # print(result)
 #연습문제===========================================================
+#함수==================================================================
+#파이썬 함수의 구조
+# def add(a, b): #def 함수 이름(매개변수) : 수행할 문장...
+#     return a+b#마지막에 리턴
+# a = 3
+# b = 4
+# c = add(a,b)
+# print(c)
+# print(add(a,b))
+#입력값이 없는 함수
+# def say():
+#     return "hi"
+# a  = say()
+# print(a)
+#결과값이 없는 함수
+# def add(a,b):
+#     print("%d, %d의 합은 %d입니다."%(a,b,a+b))
+# a = add(3,4)# 반환값이 없다.
+# print(a)# none이 출력
+# 입력값도 결과값도 없는 함수
+# def say():
+#     print("hi")
+# say()#입력값, 반환값이 없는 say함수를 사용할 수 있는 유일한 방법
+#매개변수 지정하여 호출
+# def add(a,b):
+#     return a+b
+# # result = add(a = 3, b = 4)#a에 3, b에 4라고 지정하여 호출
+# # print(result)
+# #매개변수 지정의 장점 : 순서에 상관없이 사용 가능
+# result = add(b = 5, a = 4)#순서 상관없다. 
+# print(result)
+#입력값의 갯수를 확신할 수 없을 때
+# def add_many(*args):
+#     result = 0
+#     for i in args:
+#         result +=i
+#     return result
+
+# result = add_many(1,2,3,4,5,6,7,8,9,10)#리스트가 아니라 매개변수로 하나씩 다 넣어주면 된다.
+# print(result)
+#예제 2
+# def add_mul(choice, *args):#두가지 종류의 매개변수를 포함한 함수
+#     if choice == "add":
+#         result = 0
+#         for i in args:
+#             result +=i
+#     elif choice == "mul":
+#         result = 1
+#         for i in args:
+#             result *=i
+#     return result
+# result = add_mul('add', 1,2,3,4,5)
+# print(result)
+# result = add_mul('mul',1,2,3,4,5)
+# print(result)
+#키워드 파라미터
+# def print_kwargs(**kwargs):#키워드 파라미터를 사용할 때는 매개변수 앞에 별 두개(**)를 붙힌다. 
+#     print(kwargs)
+# #딕셔너리로 만들어져 출력됨
+# #**kwargs와 같은 **매개변수는 딕셔너리가 되고 모든 key=value 형태의 결과값이 저장된다.
+# print_kwargs(a=1)
+# print_kwargs(name = 'foo', age = 3)
+# def add_and_mul(a,b):
+#     return a+b, a*b
+# result = add_and_mul(a=3,b=4) #결과값은 언제나 하나 -> (a+b, a*b)꼴이 튜플이 반환됨.
+# print(result) #(7,12)가 출력
+# #return의 또다른 쓰임새
+# def say_nick(nick):
+#     if nick == "바보":
+#         return# 입력값으로 '바보'가 들어오면 문자열을 출력하지 않고 함수를 탈출
+#     print("나의 별명은 %s입니다."%nick)
+# say_nick('야호')
+# say_nick('바보')
+# 매개변수의 초기값 미리 정하기
+# def say_myself(name, old, man=True):#매개변수에 미리 값을 넣어줌. 
+#     print("나의 이름은 %s입니다." %name)
+#     print("나이는 %d살입니다." %old)
+#     if man:
+#         print("남자입니다.")
+#     else:
+#         print("여자입니다.")
+
+# say_myself('박응용', 27)
+# say_myself('박응용', 27, True)#윗줄과 같은값 출력
+# say_myself('박응용', 27, False)#여자라고 출력
+#매개변수 위치를 바꿀 경우
+# non-default argument follows default argument발생. 이는 매개변수 뒤에 초깃값을 설정해놓지 않은 매개면수는 사용할 수 없다는 뜻.
+#초기화시키고 싶은 매개변수는 항상 뒤쪽에 놔둬야 한다. 
+# def say_myself(name, man=True, old):#매개변수에 미리 값을 넣어줌. 
+#     print("나의 이름은 %s입니다." %name)
+#     print("나이는 %d살입니다." %old)
+#     if man:
+#         print("남자입니다.")
+#     else:
+#         print("여자입니다.")
+
+# say_myself("박응용", 27)
+
+#전역변수
+# a = 1
+# def vartest():
+#     global a# 함수 밖의 a를 직접 사용하겠다.
+#     a+=1
+# vartest()
+# print(a)#2출력
+# lambda 사용================
+# 함수를 생성할 때 사용하는 예약어. def와 동일한 역할. 함수를 한 줄로 간결하게 만들 때 사용한다. 
+# def를 사용할 정도로 복잡하지 않거나 def를 사용할 수 없는 곳에서 쓰인다. 
+# 사용 예제
+# add = lambda a, b: a+b #lambda로 만든 함수는 return명령어가 없어도 결과값을 돌려준다.
+# result = add(3,4)
+# print(result)
+# lambda 사용================
+#사용자 입력과 출력========================================
+#사용자 입력
+# a = input()#사용자가 입력한 문장을 a에 대입. input()은 입력받는 모든 것은 문자열로 취급한다. 
+# print(a)
+#문구를 띄우며 입력 받기
+# a = input("숫자를 입력하세요 : ")
+# print(a)
+#print에 대하여
+# print("life" "is" "too short")#1
+# print("life"+"is"+"too short")#2
+# #1과 2는 동일한 값 출력. 따옴표로 둘러쌓인 문자열을 연속해서 쓰면 +연산을 한 것과 같다.
+# #문자열 띄어쓰기
+# print("life","is","too short")#콤마를 사용하면 띄어쓰기를 할 수 있다.
+#결과값 출력 복습
+# for i in range(10):
+#     print(i, end=' ')
+#파일 읽고 쓰기
+#파일 쓰기
+# f = open("새파일.txt", 'w')#쓰기 모드로 새파일.txt를 생성
+# for i in range(1, 11):
+#     data = "%d번째 줄입니다.\n" % i
+#     f.write(data)
+# f.close()
+#p172까지 함
+#사용자 입력과 출력========================================
