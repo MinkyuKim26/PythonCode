@@ -1023,10 +1023,86 @@ a = 0
 #     print(i, end=' ')
 #파일 읽고 쓰기
 #파일 쓰기
-# f = open("새파일.txt", 'w')#쓰기 모드로 새파일.txt를 생성
+# f = open("/Users/minkyu/Documents/PythonCode/새파일.txt", 'w')#쓰기 모드로 새파일.txt를 생성. 경로를 다 써줘야한다. 
 # for i in range(1, 11):
 #     data = "%d번째 줄입니다.\n" % i
 #     f.write(data)
 # f.close()
-#p172까지 함
+#p172까지 함(200823)
+#외부에 저장된 파일을 읽는 여러가지 방법=======================
+#readline() 사용
+# f = open("/Users/minkyu/Documents/PythonCode/새파일.txt", 'r')
+# while True:
+#     line = f.readline() #파일을 한 줄씩 읽어 들인다
+#     if not line:break
+#     print(line)
+# f.close()
+#readlines() 이용
+# f = open("/Users/minkyu/Documents/PythonCode/새파일.txt", 'r')
+# lines = f.readlines()#각각의 줄을 요소로 갖는 리스트를 반환
+# for line in lines:
+#     print(line)
+# f.close()
+#read() 이용
+# f = open("/Users/minkyu/Documents/PythonCode/새파일.txt", 'r')
+# data = f.read()#파일 전체 내용을 문자열로 돌려줌
+# print(data)#파일 전체 내용을 출력
+# f.close()
+#파일 추가 모드('a')
+# f = open("/Users/minkyu/Documents/PythonCode/새파일.txt", 'a')# 파일 추가 모드
+# for i in range(11, 20):
+#     data = "%d 번째 줄입니다.\n" % i
+#     f.write(data)
+# f.close()
+#파일을 자동으로 닫아줌(with)
+# with open("/Users/minkyu/Documents/PythonCode/kim.txt", 'w') as f:
+#     f.write("Life is too short, you need python")
+#연습문제================================================
+#연습문제1(주어진 자연수의 홀, 짝 여부 판단)
+# def is_odd(number):
+#     if number % 2 == 0:
+#         return True
+#     else:
+#         return False
+# num = int(input())
+# print(is_odd(num))
+#연습문제2(입력으로 들어오는 모든 수의 평균 값을 계산해 주는 함수)
+# def avg_numbers(*args):
+#     result = 0
+#     for i in args:
+#         result+=i
+#     return result / len(args)
+
+# print(avg_numbers(1, 2))
+# print(avg_numbers(1,2,3,4,5))
+#연습문제3(두 개의 숫자를 입력받아 더하여 돌려주는 프로그램)
+# input1 = int(input("첫번째 숫자를 입력해주세요:"))
+# input2 = int(input("두번째 숫자를 입력해주세요:"))
+
+# total = input1 + input2
+# print(total)
+#연습문제5(문자열 저장)
+# f1 = open("test.txt", 'w')# /Users/minkyu에 저장된다.
+# f1.write("Life is too short")
+# f1.close()# 필수
+
+# f2 = open("test.txt", 'r')
+# print(f2.read())
+# f2.close()
+#연습문제6(입력을 저장)
+# user_input = input("저장할 내용을 입력하세요:")
+# f = open('test.txt', 'a')
+# f.write(user_input)
+# f.close()
+#연습문제7(문자열 변경)
+# f=open('test.txt', 'r')
+# body = f.read()
+# f.close()
+
+# body = body.replace("java", "python")
+
+# f = open('test.txt', 'w')
+# f.write(body)
+# f.close()
+#연습문제================================================
 #사용자 입력과 출력========================================
