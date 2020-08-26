@@ -1106,3 +1106,112 @@ a = 0
 # f.close()
 #연습문제================================================
 #사용자 입력과 출력========================================
+#클래스====================================================
+# class Calculator:#클래스 선언
+#     def __init__(self):
+#         self.result = 0#초기값 0
+
+#     def add(self, num):#클래스 함수
+#         self.result +=num
+#         return self.result
+#     def sub(self, num):
+#         self.result -=num
+#         return self.result
+
+# cal1 = Calculator()#객체 생성
+# cal2 = Calculator()
+
+# #클래스 함수 호출
+# print(cal1.add(3))
+# print(cal1.add(4))
+# print(cal2.add(3))
+# print(cal2.add(7))
+#사칙연산 클래스 생성
+# class FourCal: #클래스 선언
+#     def __init__(self, first, second):
+#         self.first = first
+#         self.second = second
+#     def setdata(self, first, second): #초기화 함수에서 클래스에 속하는 변수를 만드는듯? 매개변수로(객체 본인, 인자1, 인자2, ...)이렇게 받는듯.
+#         self.first = first #함수 호출시 함수를 호출한 객체가 자동으로 첫번째 인수로 
+#         self.second = second
+#     def add(self):
+#         return (self.first + self.second)
+#     def sub(self):
+#         return (self.first - self.second)
+#     def div(self):
+#         return (self.first / self.second)
+#     def mul(self):
+#         return (self.first * self.second)
+
+# a = FourCal(2,4) #생성자가 정의되었으면 생성자 __init__호출
+# print(type(a))#객체 타입을 출력. Fourcal()의 인스턴스임을 확인할 수 있음 
+# FourCal.setdata(a, 3, 4)#이렇게도 호출 가능
+# print(a.first)
+# print(a.second)
+# a.first = 5
+# a.second = 6
+# print(a.first)
+# print(a.second)
+# print(a.add())
+# print(a.sub())
+# print(a.mul())
+# print(a.div())
+#인자를 초기화하지 않고 사용할 경우 에러 발생
+#클래스 상속=========================
+# class MoreFourCal(FourCal):# 상속 클래스 이름(부모 클래스 이름)
+#     def pow(self): # 제곱 함수
+#         result = self.first ** self.second#  **가 제곱 연산
+#         return result
+# a = MoreFourCal(2,4)
+# print(a.pow())
+#상속받은 클래스 함수 모두 사용 가능
+# class safeFourcal(FourCal):
+#     def div(self):# 메서드 오버라이딩
+#         if self.second == 0 :
+#             return 0
+#         else:
+#             return (self.first / self.second)
+# a = safeFourcal(4,0)
+# print(a.div())# 0을 반환
+#클래스 변수
+class Family:
+    lastname = "박" # 클래스 변수. 클래스의 모든 객체에 공유되는 변수
+print(Family.lastname)# 클래스 변수 출력. "박"
+a = Family()
+b = Family()
+Family.lastname = "김"# 클래스 변수는 바꿀 수 있다. 바꾼 값도 모든 객체가 공유한다.
+a.lastname = "성"#객체의 클래스 변수 == 일반변수다.
+print(a.lastname)# "성"
+print(b.lastname)# "김"
+#클래스====================================================
+#모듈=====================================================
+#모듈 : 함수, 변수, 클래스를 모아놓은 파일
+#C언어의 헤더파일 불러오듯 불러오는건가 싶다. 굳이 따지자면 .cpp나 .c를 불러온다고 생각하면 된다. 
+# #inlcude "asdfasfd.h"꼴과 같다고 생각하자. 
+#형식 : import 모듈 이름(이미 만들어놓은 파이썬 모듈을 사용할 수 있게 해주는 명령어라 .py는 입력하지 않는다.)
+#모듈 이름 없이 함수 이름만 쓰고 싶을 때(== using namespace)
+# from 모듈 이름 import 모듈 함수 형식으로 쓰도록 한다. 
+# 예제
+# from mod1 import add
+# add(3,4) #7을 출력. mod1.add(3,4)과 같이 쓰지 않아도 된다.
+#함수를 여러개 가져오기
+# from mod1 import add, sub #함수 이름 2개 입력
+# from mod1 import * # *는 '모든 것'이라는 뜻
+#if __name__ == "__main__"의 의미 : 직접 실행되었을 때만 아래 코드를 실행한다는 뜻(mod1.py를 참조)
+#__name__ 변수 : 파이썬이 내부적으로 사용하는 특별한 변수 이름. 실행된 .py파일의 이름이 들어간다. 여기 경우엔 Hello가 __name__에 들어간다. 
+#클래스나 변수 등을 포함한 모듈(mod2)
+#import mod2
+#a = mod2.Math()#모듈 안에 있는 클래스 사용 -> '.'사용
+#print(a.solv(2))
+#print(mod2.add(mod2.PI, 4.4))
+#다른 파일에서 모듈 불러오기(modtest.py)
+#모듈=====================================================
+#패키지=====================================================
+#도트를 사용하여 파이썬 모듈을 계층적으로 관리할 수 있게 해준다.
+#예 : A패키지에 있는 모듈 B : A.B
+#패키지 예제는 다른 파일에서
+#결론 : 라이브러리 만드는거 같은 기분이 들었다. 나중에 필요할 때 책 보면서 복습해야지.
+#패키지=====================================================
+#200826 : 클래스, 모듈, 패키지에 대해 배움. 클래스는 뭐 내가 알던 그거고 모듈은 C언어의 .h파일을 include하는 느낌 들게 하는 친구고
+#패키지는 라이브러리 제작하는 것 같은 기분이 들었다. 했던거라 어렵지는 않은데 이걸 몸에 체득해서 쓰기에는 시간이 좀 걸리지 않을까 싶다. 
+#예외 처리=====================================================
