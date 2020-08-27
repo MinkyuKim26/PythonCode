@@ -1174,15 +1174,15 @@ a = 0
 # a = safeFourcal(4,0)
 # print(a.div())# 0을 반환
 #클래스 변수
-class Family:
-    lastname = "박" # 클래스 변수. 클래스의 모든 객체에 공유되는 변수
-print(Family.lastname)# 클래스 변수 출력. "박"
-a = Family()
-b = Family()
-Family.lastname = "김"# 클래스 변수는 바꿀 수 있다. 바꾼 값도 모든 객체가 공유한다.
-a.lastname = "성"#객체의 클래스 변수 == 일반변수다.
-print(a.lastname)# "성"
-print(b.lastname)# "김"
+# class Family:
+#     lastname = "박" # 클래스 변수. 클래스의 모든 객체에 공유되는 변수
+# print(Family.lastname)# 클래스 변수 출력. "박"
+# a = Family()
+# b = Family()
+# Family.lastname = "김"# 클래스 변수는 바꿀 수 있다. 바꾼 값도 모든 객체가 공유한다.
+# a.lastname = "성"#객체의 클래스 변수 == 일반변수다.
+# print(a.lastname)# "성"
+# print(b.lastname)# "김"
 #클래스====================================================
 #모듈=====================================================
 #모듈 : 함수, 변수, 클래스를 모아놓은 파일
@@ -1215,3 +1215,261 @@ print(b.lastname)# "김"
 #200826 : 클래스, 모듈, 패키지에 대해 배움. 클래스는 뭐 내가 알던 그거고 모듈은 C언어의 .h파일을 include하는 느낌 들게 하는 친구고
 #패키지는 라이브러리 제작하는 것 같은 기분이 들었다. 했던거라 어렵지는 않은데 이걸 몸에 체득해서 쓰기에는 시간이 좀 걸리지 않을까 싶다. 
 #예외 처리=====================================================
+#try.except문
+#try 블록 수행 중 오류가 발생시 except 블록이 수행.
+#try 블록 수행 중 오류가 발생하지 않으면 except 블록 수행 X
+#1. try, except만 표기
+#try:
+#   4 / 0
+#except: #오류 종류에 상관없이 오류가 발생하면 except블록을 수행
+#   print("에러")
+#2. 발생 오류만 포함한 except문
+# try:
+#     4 / 0
+# except ZeroDivisionError: # except문에 미리 정해 놓은 오류 이름과 일치할 때만 except 블록을 수행
+#     print("에러")
+#3. 발생 오류와 오류 메세지 변수까지 포함한 except문
+# try:
+#     4/0
+# except ZeroDivisionError as e:#오류 메세지의 내용까지 알고 싶을 때 사용하는 방법
+#     print(e)#e에 오류 메세지가 담긴다.
+#indexError
+# try:
+#     a = [1,2,3]
+#     print(a[4])
+# except IndexError as e:
+#     print(e)#list index out of range 출력
+#finally문
+#try문 수행 도중 예외 발생 여부에 상관없이 항상 수행된다. 
+#사용한 리소스를 close해야할 때 많이 사용
+# f = open('foo.txt', 'w')
+# try:
+#     f.write("hi")
+# finally:# try문을 수행한 뒤 예외 발생 여부와 상관없이 수행된다.
+#     f.close()
+#여러 개의 오류 처리
+# try:
+#     a = [1,2]
+#     print(a[3])
+#     4/0
+# except ZeroDivisionError:# 인덱싱 오류가 먼저 발생했기에 이 문은 시행되지 않는다. 
+#     print("0으로 나눌 수 없습니다.")
+# except IndexError:# 인덱싱 오류가 먼저 발생 -> 이 문으로 먼저 넘어옴.
+#     print("인덱싱할 수 없습니다.")
+#+오류 메세지 출력
+# try:
+#     a = [1,2]
+#     print(a[3])
+#     4/0
+# except ZeroDivisionError as e:# 인덱싱 오류가 먼저 발생했기에 이 문은 시행되지 않는다. 
+#     print(e)
+# except IndexError as e:# 인덱싱 오류가 먼저 발생 -> 이 문으로 먼저 넘어옴.
+#     print(e)# list index out of range 출력
+#오류 회피하기
+# try:
+#     f = open('없는파일.txt', 'r')
+# except FileNotFoundError:
+#     pass# 파일이 없더라도 오류를 발생시키지 않고 통과
+#오류 일부러 발생시키기
+# class Bird:
+#     def fly(self):
+#         raise NotImplementedError # 자식 클래스는 반드시 fly라는 함수를 구현하도록 만들고 싶을 때 이렇게 일부러 에러를 발생
+    #에러를 발생시키니 자식 클래스는 반드시 fly함수를 오버라이딩 해야한다.
+# class Eagle(Bird):
+#     pass
+# eagle = Eagle()
+# eagle.fly()# NotImplementedError 발생
+# 에러가 발생하지 않게 하려면
+# class Eagle(Bird):
+#     def fly(self):# 함수 재정의
+#         print("very fast")
+
+# eagle = Eagle()
+# eagle.fly()
+#예외 만들기
+#특수한 경우에만 예외 처리를 하기 위해 예외를 만들어서 사용
+#파이썬 내장 클래스인 Exception 클래스를 상속하여 만들 수 있다. 
+# class MyError(Exception):
+#     def __str__(self):
+#         return "허용되지 않는 별명입니다." # 얘가 e에 들어간다. 
+
+# def say_nick(nick):
+#     if nick == "바보":
+#         raise MyError()
+#     print(nick)
+
+# # say_nick("천사")
+# # say_nick("바보")# '천사'가 한 번 출력된 후 MyError 발생
+# try:
+#     say_nick("천사")
+#     say_nick("바보")# MyError 발생
+# # except MyError:
+# #     print("허용되지 않는 별명입니다.")# 천사를 출력 후 여기로 온다.
+# # 오류 메세지를 사용하고 싶을 때
+# except MyError as e:
+#     print(e) # __str__메서드를 구현해야 e에 값이 담김
+#예외 처리=====================================================
+#내장 함수=====================================================
+#내장 함수는 import 없이 바로 사용할 수 있다(예 : print 등)
+#abs(절대값)
+# print(abs(-3))
+# print(abs(-1.2))
+#all(반복 가능한 자료형 x를 입력 인수로 받음. x가 모두 참이면 True, 거짓이 하나라도 있으면 False 반환)
+#반복 가능한 자료형은 리스트, 튜플, 문자열, 딕셔너리, 집합이 있다. 
+# print(all([1,2,3]))# 요소가 모두 참 -> True 반환
+# print(all([1,2,3,0]))# 요소 중 0이 포함 -> False 반환
+#any(x중 하나라도 참이 있으면 True, 모두 거짓이면 False)
+# print(any([1,2,3,0]))# True 반환
+# print(any([0,""]))# 모두 거짓 -> False 반환
+#chr(아스키코드 값을 입력받아 해당하는 문자를 출력)
+# print(chr(97))# 'a'
+# print(chr(48))# 0
+# dir(객체가 자체적으로 가지고 있는 변수나 함수를 보여준다)
+# c = dir([1,2,3]) # 리스트 '객체' -> 리스트가 가지고 있는 함수 목록
+# print(c)
+# d = dir({'1' : 'a'})# 딕셔너리 '객체' -> 딕셔너리가 가지고 있는 함수 목록
+# print(d)
+#divmod(a를 b로 나눈 몫과 나머지를 튜플 형태로 돌려줌)
+# print(divmod(7,3))# (2,1)출력
+#enumerate(순서가 있는 자료형을 입력 받아 인덱스 값을 포함하는 enumerate 객체로 돌려줌)
+# for i, name in enumerate(['body', 'foo', 'bar']):#i와 name을 enumerate(['body', 'foo', 'bar'])에서 받는다.
+#     print(i, name)
+    #0 body
+    #1 foo
+    #2 bar 출력
+# eval(expression, 실행 가능한 문자열을 입력 받아 문자열을 실행한 결과값을 돌려줌)
+# print(eval('1+2'))# 3 출력
+# print(eval("'hi' + 'a'"))# hia 출력
+# print(eval('divmod(4,3)'))# (1,1) 출력
+# eval 함수는 입력받은 문자열로 파이썬 함수나 클래스를 동적으로 실행하고 싶을 때 사용
+# filter(함수 이름과 인수를 자료형으로 받아 인수에 함수를 넣었을 때 True를 반환하는 것만 골라내서 돌려줌)
+#filter를 쓰지 않을 경우
+# def positive(l):
+#     result= []#반환값이 참인 것만 골라내서 저장할 변수
+#     for i in l:
+#         if i > 0:
+#             result.append(i)
+#     return result
+# print(positive([1,-3,2,0,-5,6]))#[1,2,6] 출력
+# filter를 사용할 경우
+# def positive(x):
+#     return x > 0
+#                   # 함수이름, 들어갈 인수(목록)
+# print(list(filter(positive, [1,-3,2,0,-5,6])))# [1,2,6] 출력
+#lambda를 사용해 더 간편하게
+# print(list(filter(lambda x: x>0, [1,-3,2,0,-5,6])))#[1,2,6] 출력
+#hex(정수를 16진수로 변경)
+# print(hex(234))# 0x3a
+# print(hex(3))# 0x3
+#id(객체를 입력받아 객체의 고유 주소 값을 반환)
+# a = 3
+# print(id(a))#a가 가리키는 메모리 주소를 반환
+# print(id(3))#같은 주소값 반환
+# b = a
+# print(id(b))#같은 주소값 반환 -> 모두 같은 객체를 가리킴
+# print(id(4))#다른 객체 -> 다른 주소값 반환
+#input(사용자 입력을 받는 함수)
+# a = input()
+# print(a)
+# b = input("Enter : ")
+# print(b)
+# int(문자열 형태의 숫자나 소숫점이 있는 숫자 등을 정수 형태로 반환)
+# print(int('3'))# 3
+# print(int(3.4))# 3
+# int(x, radix)는 radix 진수로 표현된 문자열 x를 10진수로 변환하여 돌려줌
+# print(int('11', 2))# 2진수로 표현된 '11'을 10진수로 변환
+# print(int('1A', 16))# 16진수로 표현된 '1A'을 10진수로 변환
+# isinstance(첫 번째 인수로 인스턴스, 두 번째 인수로 클래스 이름을 받음. 인스턴스가 그 클래스의 인스턴스가 맞으면 True, 아니면 False 반환)
+# class person: pass
+# a = person()
+# b = 3
+# print(isinstance(a, person))# 인스턴스 맞는지 여부 판단. True 반환
+# print(isinstance(b, person))# False 반환. 왜냐하면 b는 person 클래스의 인스턴스가 아니니까.
+# len(입력값의 길이(요소의 전체 개수)를 반환)
+# print(len("python"))# 6
+# print(len([1,2,3]))# 3
+# print(len((1, 'a')))# 2
+#list(반복 가능한 자료형을 리스트로 만들어서 반환)
+# print(list("python"))# ['p', 'y', 't', 'h', 'o', 'n']
+# print(list((1,2,3)))# [1, 2, 3]
+#리스트를 넣으면 리스트를 반환
+#map(함수와 반복 가능한 자료형을 입력받아 함수가 수생한 결과를 반환)
+#map을 쓰지 않을 경우
+# def two_times(numberList):
+#     result = []
+#     for number in numberList:
+#         result.append(number * 2)
+#     return result
+
+# result = two_times([1,2,3,4])
+# print(result)# [2,4,6,8] 반환
+# map을 사용
+# def two_times(x) : return x*2
+# print(list(map(two_times, [1,2,3,4])))# [1,2,3,4]의 요솟값을 차례대로 two_times에 넣고 반환된 값을 차레대로 list에 담아 list 생성
+# max(반복 가능한 자료형을 입력받아 최댓값 반환)
+# print(max([1,2,3]))# 3 반환
+# print(max("python"))# y 반환
+# min(max와 반대)
+# print(min([1,2,3]))# 1 반환
+# print(min("python"))# h 반환
+# oct(정수 형태의 숫자를 8진수 문자열로 바꾸어 반환)
+# print(oct(34))# 0o42
+# print(oct(12345))# 0o30071
+# open(파일 이름과 읽기 방법을 입력받아 파일 객체를 돌려주는 함수)
+# f = open("binary_file", "rb")#바이너리 읽기 모드(바이너리 모드는 기존 키워드에 b를 추가)
+# f = open("binary_file", "rw")#바이너리 쓰기 모드
+# fread1 = open("read_mode.txt", 'r')
+# fread2 = open("read_mode.txt")# fread1과 fread2는 동일한 방법
+#->모드 부분을 생락하면 기본값으로 읽기 모드(r)를 갖게 된다.
+# fappend = open("append_mode.txt", 'a')# 추가 모드로 파일을 여는 예
+# ord(문자의 아스키 코드 값을 반환)
+# print(ord('a'))# 97
+# print(ord('0'))# 48
+# chr함수(int -> char)와 반대다(ord 함수는 char -> int)
+# pow(제곱 반환)
+# print(pow(2,4))# 2의 4제곱 반환
+# print(pow(3,3))# 3의 3제곱 반환
+# range(입력받은 숫자에 해당하는 범위 값을 반복 가능한 객체로 반환)
+# 인수가 하나일 경우
+# print(list(range(5)))# [0,1,2,3,4] 출력
+#인수가 2개일 경우(시작, 끝)
+#끝 숫자는 해당값에 포함되지 않는다.
+# print(list(range(5,10)))# [5,6,7,8,9] 출력
+# range()의 반환값이 list가 아니다. 그러니 list로 쓰려면 list()를 이용하도록 하자.
+#인수가 3개일 경우(세 번째 인수는 숫자 사이의 거리)
+# print(list(range(1,10,2)))# [1,3,5,7,9]. 1부터 9까지, 숫자 사이의 거리는 2
+# print(list(range(0,-10,-1)))# [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]. 0부터 -9까지, 숫자 사이의 거리는 -1
+# round(반올림)
+# print(round(4.6))# 5
+# print(round(4.2))# 4
+# 표시 소숫점 따로 표기
+# print(round(5.678, 2))# 소수점 2자리까지만 반올림. 5.68
+# sorted(입력값을 정렬, 리스트로 반환)
+# print(sorted([1,3,2]))# [1, 2, 3]
+# print(sorted(['a','c','b']))# ['a', 'b', 'c']
+# print(sorted("zero"))# ['e', 'o', 'r', 'z']
+# print(sorted((3,2,1)))# [1, 2, 3]
+#list의 함수로 sort가 있으나 이는 리스트 객체를 정렬할 뿐, 그 결과를 반환하지 않는다. 
+# str(문자열로 만들어서 반환)
+# print(str(3))# 3
+# print(str('hi'))# hi
+# print(str('hi'.upper()))# HI. 'hi'.upper()를 문자열로 만들어 돌려줌.
+# sum(입력받은 리스트나 튜플의 모든 요소값의 합을 반환)
+# print(sum([1,2,3]))# 6
+# print(sum((4,5,6)))# 15
+# tuple(반복 가능한 자료형을 입력받아 튜플로 반환. 튜플이 입력되었으면 그대로 반환)
+# print(tuple("abc"))# ('a', 'b', 'c')
+# print(tuple([1,2,3]))# (1, 2, 3)
+# print(tuple((1,2,3)))# (1, 2, 3)
+# type(입력된 값의 자료형 반환)
+# print(type("abc")) # <class 'str'>
+# print(type([])) # <class 'list'>
+# print(type(open("test", 'w'))) # <class '_io.TextIOWrapper'>
+# zip('동일한' 개수로 이루어진 자료형을 묶어줌)
+a = list(zip([1,2,3], [4,5,6]))
+print(a)# [(1, 4), (2, 5), (3, 6)]. 각 리스트에서 [0]인 것끼리, [1]인 것끼리 묶어서 반환
+a = list(zip([1,2,3], [4,5,6], [7,8,9]))
+print(a)# [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+a = list(zip("abc", "def"))
+print(a)# [('a', 'd'), ('b', 'e'), ('c', 'f')]
+#내장 함수=====================================================
