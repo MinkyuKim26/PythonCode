@@ -1466,10 +1466,434 @@ a = 0
 # print(type([])) # <class 'list'>
 # print(type(open("test", 'w'))) # <class '_io.TextIOWrapper'>
 # zip('동일한' 개수로 이루어진 자료형을 묶어줌)
-a = list(zip([1,2,3], [4,5,6]))
-print(a)# [(1, 4), (2, 5), (3, 6)]. 각 리스트에서 [0]인 것끼리, [1]인 것끼리 묶어서 반환
-a = list(zip([1,2,3], [4,5,6], [7,8,9]))
-print(a)# [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
-a = list(zip("abc", "def"))
-print(a)# [('a', 'd'), ('b', 'e'), ('c', 'f')]
+# a = list(zip([1,2,3], [4,5,6]))
+# print(a)# [(1, 4), (2, 5), (3, 6)]. 각 리스트에서 [0]인 것끼리, [1]인 것끼리 묶어서 반환
+# a = list(zip([1,2,3], [4,5,6], [7,8,9]))
+# print(a)# [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+# a = list(zip("abc", "def"))
+# print(a)# [('a', 'd'), ('b', 'e'), ('c', 'f')]
 #내장 함수=====================================================
+#외장 함수=====================================================
+#자주 사용되는 라이브러리
+#sys : 파이썬 인터프리터가 제공하는 변수와 함수를 직접 제어할 수 있게 해주는 모듈
+#argv_test에 
+# import sts
+# print(sys.argv)
+# 를 입력후 터미널에
+# python argv_test.py you need python # 이렇게 치니까
+# ['argv_test.py', 'you', 'need', 'python'] # 이렇게 나왔다. 
+#python 명령어 뒤 모든 것들이 공백을 기준으로 나뉘어 sys.argv 리스트의 요소가 된다.
+# 강제로 스크립트 종료 - sys.exit
+# 대화형 인터프리터를 종료하는 것과 같은 기능을 한다. 프로그램 파일 안에서 사용하면 프로그램을 종료시킨다. 
+# C의 exit() 같은 거라고 생각하면 될듯
+# 자신이 만든 모듈을 불러와 사용하기 - sys.path
+# 파이썬 모듈이 저장된 위치를 나타낸다. sys.path를 실행하면 나오는 위치에 있는 파이썬 모듈은 경로에 상관없이 어디에서나 불러올 수 있다. 
+# 터미널을 통해 실행시키니
+# ['', '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python27.zip', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-darwin', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac/lib-scriptpackages', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-old', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload', 
+# '/Users/minkyu/Library/Python/2.7/lib/python/site-packages', 
+# '/Library/Python/2.7/site-packages', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python', 
+# '/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC', 
+# '/Library/Python/2.7/site-packages/pip-20.2b1-py2.7.egg'] 이렇게 나온다. ㄷㄷ
+# 여기서 ''는 현재 디렉터리를 말한다. 
+# sys.path.append("경로")로 경로 이름을 추가할 수 있다. 
+# pickle : 객체의 형태를 그대로 유지하면서 파일에 저장하고 불러올 수 있게 하는 모듈
+# import pickle
+# f = open("test.txt", 'wb')
+# data1 = {1:'python', 2:'you need'}
+# pickle.dump(data1,f)#dump()를 이용해 딕셔너리 객체 data를 그대로 파일에 저장. 게임 데이터 저장할 때 사용할 수 있을거 같다. 
+# f.close()
+
+# f = open("test.txt", 'rb')
+# data2 = pickle.load(f)#load를 이용해 객체 그대로 불러온다.
+# print(data2)# {1:'python', 2:'you need'} 출력
+# OS : 환경 변수, 디렉터리, 파일 등의 OS자원을 제어할 수 있께 해주는 모듈
+# os.environ - 현재 시스템의 환경 변수값을 보여준다. 
+# import os
+# print(os.environ)# 환경 변수에 대한 정볼르 딕셔너리 객체로 돌려준다.
+# environ({'TERM_PROGRAM': 'vscode', 
+# 'TERM': 'xterm-256color', 
+# 'SHELL': '/bin/bash'...출력(엄청 많다)
+#각 환경변수를 따로 출력할 수 있다. 왜냐하면 딕셔너리니까
+# print(os.environ['PATH'])
+# /Library/Frameworks/Python.framework/Versions/3.7/bin:
+# /Library/Frameworks/Python.framework/Versions/3.8/bin: 등등...(아주 많다)
+# os.chdir - 현재 디렉터리 위치 변경
+# os.getcwd - 현재 디렉터리 위치 반환
+# print(os.getcwd())# /Users/minkyu/com.minkyu/unity_GOMap 반환
+# os.system - 시스템 명령어 호출
+# 시스템 자체의 프로그램이나 기타 명령어를 호출
+# os.system("dir")
+# os.popen - 실행한 시스템 명령어의 결과값 돌려받기
+# 시스템 명령어를 실행한 결과값을 읽기 모드 형태의 파일 객체로 돌려받음
+# f = os.popen("dir")
+# print(f.read())# 읽어들인 파일 객체의 내용을 출력
+# 기타 os 관련 함수
+# os.mkdir(디렉터리) - 디렉터리 생성
+# os.rmdir(디렉터리) - 디렉터리 삭제. 디렉터리가 비어있어야 삭제 가능
+# os.unlink(파일 이름) - 파일을 지운다
+# os.rename(src, dst) - src라는 이름의 파일을 dst라는 이름으로 바꾼다. 
+# shutil - 파일을 북사해줌
+# import shutil
+# shutil.copy('src.txt', "dsc.txt") # src.txt 파일과 동등한 내용의 파일이 dst.txt로 복사된다.
+# glob - 특정 디렉터리에 있는 파일 이름을 모두 알려준다.
+# glob(pathname) - 디렉터리에 있는 파일들을 읽은 뒤 리스트로 만들어 반환
+# import glob
+# a = glob.glob("/Users/minkyu/Documents/PythonCode/doit/Mymod/*")# *는 모든 파일 반환. 만약 mark*라고 적혀있으면 'mark~'꼴의 이름으로 된 파일만 반환
+# print(a)
+# tempfile - 파일을 임시로 만들어서 사용할 때 유용하다
+# tempfile.mktemp()는 중복되지 않는 임시 파일의 이름을 무작위로 만든 뒤 반환
+# import tempfile
+# filename = tempfile.mktemp()
+# print(filename)# /var/folders/j4/cjh0qv9j7_d9pcjff5ddgyn80000gn/T/tmprk_2_fzm이 반환
+# # tempfile.TemporaryFile() - 임시 저장 공간으로 사용할 파일 객체 반환.
+# # 반환한 파일은 기본적으로 바이너리 쓰기 모드(wb)를 가진다. f.close()가 사용되면 자동으로 사라진다.
+# f = tempfile.TemporaryFile()
+# f.close() # 생성한 임시 파일이 자동으로 삭제
+# time - 시간과 관련된 모듈
+# time.time - UTC 기준 현재 시간을 실수 형태로 반환
+# import time 
+#print(time.time())
+# time.localtime(time.time()) - time.time()의 반환값을 사용해 연도, 월, 일, 시, 분, 초...등등의 형태로 바꾼뒤 반환
+# print(time.localtime()) # time.struct_time(tm_year=2020, tm_mon=8, tm_mday=29, tm_hour=15, tm_min=3, tm_sec=48, tm_wday=5, tm_yday=242, tm_isdst=0)
+# time.asctime() - time.localtime()에 의해 반환된 튜플 형태의 값을 인수로 받아 날짜와 시간을 알아보기 쉬운 형태로 돌려주는 함수
+# print(time.asctime(time.localtime(time.time()))# Sat Aug 29 15:05:42 2020
+# time.ctime() - time.asctime(time.localtime(time.time())을 간단하게 표시하는 방법
+# print(time.ctime()) # 근데 time.asctime()도 인수 없이 출력해도 같은값이 나온다. 뭐지
+# time.strftime() - 시간에 관계된 것을 세밀하게 표현하는 여러 가지 포맷 코드를 제공
+# print(time.strftime('%x', time.localtime()))# 08/29/20
+# print(time.strftime('%c', time.localtime()))# Sat Aug 29 15:09:00 2020
+# 포맷 코드가 엄청 많다. 나중에 구글링으로 찾아보며 사용할 것
+# time.sleep() - 일정 시간 간격을 두고 루프 실행
+# for i in range(10):
+#     print(i)
+#    time.sleep(1) # 1초 지연
+# calender - 달력 관련 모듈
+# import calendar
+# print(calendar.calendar(2020))
+#  2020
+#       January                   February                   March
+# Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su
+#        1  2  3  4  5                      1  2                         1
+#  6  7  8  9 10 11 12       3  4  5  6  7  8  9       2  3  4  5  6  7  8
+# 13 14 15 16 17 18 19      10 11 12 13 14 15 16       9 10 11 12 13 14 15
+# 20 21 22 23 24 25 26      17 18 19 20 21 22 23      16 17 18 19 20 21 22
+# 27 28 29 30 31            24 25 26 27 28 29         23 24 25 26 27 28 29
+#                                                     30 31
+
+#        April                      May                       June
+# Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su
+#        1  2  3  4  5                   1  2  3       1  2  3  4  5  6  7
+#  6  7  8  9 10 11 12       4  5  6  7  8  9 10       8  9 10 11 12 13 14
+# 13 14 15 16 17 18 19      11 12 13 14 15 16 17      15 16 17 18 19 20 21
+# 20 21 22 23 24 25 26      18 19 20 21 22 23 24      22 23 24 25 26 27 28
+# 27 28 29 30               25 26 27 28 29 30 31      29 30
+
+#         July                     August                  September
+# Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su
+#        1  2  3  4  5                      1  2          1  2  3  4  5  6
+#  6  7  8  9 10 11 12       3  4  5  6  7  8  9       7  8  9 10 11 12 13
+# 13 14 15 16 17 18 19      10 11 12 13 14 15 16      14 15 16 17 18 19 20
+# 20 21 22 23 24 25 26      17 18 19 20 21 22 23      21 22 23 24 25 26 27
+# 27 28 29 30 31            24 25 26 27 28 29 30      28 29 30
+#                           31
+
+#       October                   November                  December
+# Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su      Mo Tu We Th Fr Sa Su
+#           1  2  3  4                         1          1  2  3  4  5  6
+#  5  6  7  8  9 10 11       2  3  4  5  6  7  8       7  8  9 10 11 12 13
+# 12 13 14 15 16 17 18       9 10 11 12 13 14 15      14 15 16 17 18 19 20
+# 19 20 21 22 23 24 25      16 17 18 19 20 21 22      21 22 23 24 25 26 27
+# 26 27 28 29 30 31         23 24 25 26 27 28 29      28 29 30 31
+#                           30
+#calender.calender()의 결과. calender.prcal(연도)를 사용해도 같은 결과 출력
+#한 달만 출력
+# print(calendar.prmonth(2020, 8))
+#     August 2020
+# Mo Tu We Th Fr Sa Su
+#                 1  2
+#  3  4  5  6  7  8  9
+# 10 11 12 13 14 15 16
+# 17 18 19 20 21 22 23
+# 24 25 26 27 28 29 30
+# 31
+# 출력 결과
+# calender.weekady() - 그 날짜에 해당하는 요일 정보 반환
+# 월요일은 0, 화요일은 1,...,일요일은 6
+# print(calendar.weekday(2020,12,31))# 3(목요일) 반환
+# calendar.monthrange(연도, 월) - 입력받은 달의 1일이 무슨 요일인지, 그 달이 며칠까지 있는지 튜플 형태로 반환
+# print(calendar.monthrange(2015,12))# (1,31) 반환 -> 2015년 12월은 화요일, 12월은 31일까지 존재.
+#날짜와 관련된 프로그램을 할 때 매우 유용하게 사용됨
+# random - 난수 발생 모듈
+# import random
+# print(random.random())# 0.0~1.0사이 실수 중 난수 반환
+# print(random.randint(1, 10))# 1~10사이 정수 중 난수 반환
+#사용 예
+# def random_pop(data):#리스트의 요소 중 무작위로 하나 선택해 빼내는 함수
+#     number = random.randint(0, len(data) - 1)
+#     return data.pop(number)
+# data = [1,2,3,4,5]
+# while data: print(random_pop(data))
+# random.shuffle - 리스트의 항목으로 무작위로 섞음
+# data = [1,2,3,4,5]
+# random.shuffle(data)#리스트의 항목을 무작위로 섞음
+# print(data)# [5, 2, 1, 3, 4], [1, 5, 2, 4, 3] 등 출력
+# webbrowser - 자신의 시스템에서 사용하는 기본 웹 브라우저를 자동으로 실행
+# import webbrowser
+# webbrowser.open("http://google.com")# 구글 실행
+# webbrowser.open_new("http://google.com")# 새 창에서 구글 실행
+# threading - 스레드를 다룸
+# 스레드를 사용해 한 프로세스 안에서 n가지 일을 동시에 수행
+# import time
+# import threading
+
+# def long_task():
+#     for i in range(5):
+#         time.sleep(1)
+#         print("working : %s\n" %i)
+# print("Start")
+
+# threads = []
+# for i in range(5):
+#     t = threading.Thread(target=long_task)# 스레드의 객체가 동시 작업을 가능하게 해줌
+#     threads.append(t)
+
+# for t in threads:
+#     t.start()
+
+# print("End")
+# 원래 5초짜리 일을 5번 반복 - 25초가 걸리지만
+# 한 번에 5번 실행함으로써 5초밖에 걸리지 않는다. 
+# 허나 위의 코드를 돌리면 start와 end가 출력이 안됨.
+# start와 end가 나오게 하기
+# import time
+# import threading
+
+# def long_task():
+#     for i in range(5):
+#         time.sleep(1)
+#         print("working:%s\n" % i)
+
+# print("start")
+
+# threads = []
+# for i in range(5):
+#     t = threading.Thread(target=long_task)# threading.Thread로 만든 객체가 동시 작업을 가능하게 해줌
+#     threads.append(t)
+# for t in threads:
+#     t.start()
+# for t in threads:
+#     t.join() # 스레드가 종료될 때까지 기다림
+
+# print("End")
+
+#start, end가 같이 나옴
+
+#연습 문제================================================
+#문제 1(자식 객체 생성)
+# class Calculator:
+#     def __init__(self):
+#         self.value = 0
+    
+#     def add(self, val):
+#         self.value += val
+
+# class UpgradeCalculator(Calculator):
+#     def minus(self, val):
+#         self.value -= val
+
+# cal = UpgradeCalculator()
+# cal.add(10)
+# cal.minus(7)
+# # print(cal.value)# 10 - 7 = 3출력
+# #문제 2(값을 제한하는 MaxLimitCalculator 클래스)
+# class MaxLimitCalculator(Calculator):
+#     def add(self, val):
+#         self.value +=val
+#         if self.value > 100 : self.value = 100
+
+# cal = MaxLimitCalculator()
+# cal.add(50)
+# cal.add(60) # 110이지만 조건문에 의해 100이 된다.
+# print(cal.value)# 100 출력
+# 문제3(내장 함수)
+# print(all([1,2,abs(-3)-3]))# false
+# b = chr(ord('a')) == 'a'
+# print(b)# true
+# 문제4(내장 함수)
+# a = list(filter(lambda x: x>0, [1,-2,3,-5,8,-3]))#filter + lambda로 리스트 생성
+# print(a)# [1,3,8]
+# 문제5(진수 문제)
+# print(int(0xea))# 문자열로 넣지 말기
+# 문제6(map, lambda사용)
+# def mul(a):
+#     return a*3
+# b = list(map(mul,[1,2,3,4]))# list함수 사용하기
+# print(b)# [3,6,9,12]
+# 문제7(최댓값, 최솟값의 합)
+# a = [-8,2,7,5,-3,5,0,1]
+# b = max(a) + min(a)# 7 + (-8) = -1
+# print(b)
+# 문제 8
+# c = round(17 / 3, 4)
+# print(c)
+# 문제 9(스크립트 생성)
+# import sys
+
+# num = 0
+# for i in sys.argv:
+#     num += int(i)
+# 문제 10(os모듈 사용)
+# import os
+# print(dir(os.chdir("/Users/minkyu/Documents/PythonCode/doit")))
+#['__bool__', '__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__'] 출력
+#dir : 객체가 자체적으로 가지고 있는 변수나 함수를 보여준다
+#  문제 11(glob 모듈 사용) - 특정 폴더에 있는 파일 이름 알려줌
+# import glob
+# print(glob.glob("/Users/minkyu/Documents/PythonCode/doit/Mymod/*.py"))# 해당 경로에 ~.py만 출력
+# ['/Users/minkyu/Documents/PythonCode/doit/Mymod/argv_test.py']가 출력
+# 문제12(time 모듈 사용)
+# import time
+# print(time.strftime('%x %H:%M:%S', time.localtime()))# 08/29/20 16:57:51
+# 문제13(random 모듈 사용 - 로또 프로그램 실행)
+# import random
+# def lotto(data):#45개 숫자 중 6개 출력-data가 1~45값을 갖고있는 리스트
+#     number = random.randint(0, len(data) - 1)
+#     print(number)
+#     return data.pop(number)
+# count = 0
+# data = []
+# b = []
+# for i in range(1,46):
+#     data.append(i)
+# # print(data)
+# while count < 6:
+#     b.append(lotto(data))
+#     count+=1
+        
+# print(b)
+#외장 함수==============================================================
+# 파이썬으로 프로그램 만들어보기=============================================
+#구구단 프로그램
+# def Gugu(n):
+#     ggdan = []
+#     count = 1
+#     while count < 10:
+#         ggdan.append(n * count)
+#         count+=1
+#     return ggdan
+
+# print(Gugu(2))
+# print(Gugu(3))
+# print(Gugu(4))
+# print(Gugu(5))
+# print(Gugu(6))
+# print(Gugu(7))
+# print(Gugu(8))
+# print(Gugu(9))
+# 3과 5의 배수 합하기
+# def Plus_3_5():
+#     count = 1
+#     sum = 0
+#     while count < 1001 :
+#         if(count % 3 == 0 | count % 5 == 0): sum +=count
+#         count+=1
+#     return sum
+
+# print(Plus_3_5())
+#게시판 페이징하기
+# def show_page(paper_num, show_oneTime):
+#     page_num = int(paper_num / show_oneTime)
+#     if (paper_num % show_oneTime) != 0 : page_num+=1
+#     return page_num
+
+# print(show_page(5, 10))
+# print(show_page(15, 10))
+# print(show_page(25, 10))
+# print(show_page(30, 10))
+#간단한 메모장 만들기
+#입력 부분
+# import sys
+
+# option = sys.argv[1]
+# memo = sys.argv[2]
+
+# print(option)
+# print(memo)
+
+#추가 입력, 출력 부분
+# import sys
+
+# option = sys.argv[1]
+# if option == '-a':
+#     memo = sys.argv[2]
+#     f = open('memo.txt' 'a')
+#     f.write(memo)
+#     f.write('\n')
+#     f.close()
+# if option == '-v':
+#     f = open('memo.txt' 'r')
+#     print(f.read())
+#     f.close()
+# 탭을 4개의 공백으로 바꾸기
+# import sys
+
+# file_input = open(sys.argv[1], 'r')
+# text_input = file_input.read()
+# file_input.close()
+# text_input.replace("\t", ""*4)# 탭 공백을 스페이스바 4개 공백으로
+
+# file_output = open(sys.argv[2], 'w')
+# file_output.write(text_input)
+# file_output.close()
+
+#하위 디렉터리 검색하기
+# import os
+
+# def search(dirname):
+#     filenames = os.listdir(dirname)# os.listdir를 사용해 해당 디렉토리에 있는 파일들의 리스트를 구할 수 있다.
+#     for filename in filenames:#하나씩 체크
+#         full_filename = os.path.join(dirname, filename)
+#         if os.path.isdir(full_filename):# 하위 폴더가 있으면 
+#             search(full_filename)# 함수 다시 실행(재귀호출)
+#         else:
+#             ext = os.path.splitext(full_filename)[-1]# 파일 확장명만 따로 추출(splitext : 파일 이름을 확장자 기준으로 둘로 나눔)
+#             if ext == '.py':
+#                 print(full_filename)
+
+# search("c:/")
+# 파이썬으로 프로그램 만들어보기=============================================
+#정규 표현식============================================================
+#정규 표현식을 사용하면 간편하고 편하게 코드를 짤 수 있다.
+# import re #정규 표현식을 사용하기 위한 모듈
+# 메타 문자(원래 의미가 아닌 특별한 용도로 사용하는 문자) : . ^ $ * + ? {} [] \ | ()
+# 문자 클래스(character class) []
+# 문자 클래스로 만들어진 정규식은 '[] 사이의 문자들과 매치'라는 의미를 갖는다
+# 예 : [abc]는 'a,b,c 중 한 개의 문자와 매치'를 뜻한다
+# "a"랑 "before"은 a,b,c 중 한 개 이상의 문자를 갖고 있기 때문에 [abc]와 "일치"한다고 본다.
+# 허나 "dude"는 a,b,c 중 어느 하나도 갖고 있지 않기 때문에 [abc]와 "불일치"한다고 본다.
+# []안의 두 문자 사이에 하이픈(-)을 넣으면 두 문자 사이의 범위(From - To)를 의미한다.
+# 예를 들어 [a-c]는 [abc]를 뜻하고 [0-5]는 [012345]라는 뜻이다.
+# 이를 활용한 얘 : [a-zA-Z] : 알파벳 모두, [0-9] : 숫자
+# 문자 클래스 안에 ^메타문자를 사용할 경우에는 반대(not)라는 의미를 갖는다.
+# 예를 들어 [^0-9]라는 정규 표현식은 숫자가 아닌 문자만 매치된다.
+# 자주 사용하는 정규식은 별도의 표기법으로 표기할 수 있다. 기억하는게 좋다.
+# \d(숫자, [0-9]와 매치)
+# \D(숫자가 아닌 것, [^0-9]와 매치)
+# \s(공백을 표현하는 문자(space나 tab), [ \t\n\r\f\v]와 매치. 맨 앞의 빈칸은 공백 문자(space)를 의미)
+# \S(공백이 아닌 것. [^ \t\n\r\f\v]와 매치)
+# \w(문자+숫자, [a-zA-Z0-9_]와 매치)
+# \W(문자+숫자가 아닌 것, [^a-zA-Z0-9_]와 동일한 표현식)
+# -> 대문자로 사용한 것은 소문자의 반대
+# Dot(.) 메타 문자 : 줄바꿈 문자인 \n을 제외한 모든 문자와 매치
+#294페이지까지(200829)
+
+#정규 표현식============================================================
+    
