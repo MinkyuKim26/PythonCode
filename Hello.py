@@ -1893,7 +1893,76 @@ a = 0
 # \W(문자+숫자가 아닌 것, [^a-zA-Z0-9_]와 동일한 표현식)
 # -> 대문자로 사용한 것은 소문자의 반대
 # Dot(.) 메타 문자 : 줄바꿈 문자인 \n을 제외한 모든 문자와 매치
-#294페이지까지(200829)
+# 예 : a.b는 a와 b 사이에 \n을 제외한 어떤 문자가 들어가도 모두 매치( = a + 모든 문자 + b)
+# aab는 a와 b사이에 있는 a가 .와 일치하므로 정규식과 매치
+# a0b도 a와 b사이에 있는 0이 .와 일치하므로 정규식과 매치
+# abc는 a와 b사이에 있는게 아닌 b의 오른쪽에 문자가 있응니 정규식과 일치하지 않음
+# a[.]b는 a와 b 사이에 Dot(.) 문자가 있으면 매치한다는 뜻으로 a.b와 매치되지만 a0b와는 매치되지 않는다. 
+# 반복(*)
+# ca*t는 *바로 앞에 있는 a가 0번 이상 반복되면 매치된다는 뜻이다. 
+# ct, cat, caaat모두 a가 0번 이상(0 포함) 반복 되었기에 ca*t와 매치된다.
+# 반복(+)
+# 반복을 나타내는 또다른 메타 문자. 최소 1번 이상 반복될 때 사용
+# ca+t에 대하여
+# ct는 a가 0번 반복되기 때문에 정규식과 일치하지 않고
+# cat, caaat는 a가 1번 이상 반복되기 때문에 ca+t와 매치된다.
+# {{m,n},?} 반복 횟수 m부터 n까지 매치.
+# 만약 [3,]이면 반복 횟수가 3 이상이고 {,3}이면 반복횟수가 3이하를 의미. 생략된 m은 0과 동일, 생략된 n은 무한대(2억개 미만)의 의미를 가짐
+# 사용 예
+# 1.{m} : ca{2}t -> a가 2번 반복되면 매치. cat는 매치X, caat는 매치O
+# 2.{m,n} : ca{2,5}t -> a가 2~5번 반복되면 매치. caat, caaaaat는 매치O지만 cat는 매치X
+# 3.? : ab?c -> ?는 {0,1}을 의미. ac, abc 모두 매치O
+# *, +, ?메타 문자 모두 {m,n}형태로 고쳐 쓸 수 있지만 가급적 이해하기 쉽고 표현도 간결한 *, +, ?메타문자를 사용하도록 하자
+# 파이썬에서 정규 표현식을 사용하는 예
+# import re # 장규 표현식을 제공하는 모듈을 import
+# p = re.compile('ab*')# 정규 표햔식 컴파일
+# 정규식을 사용한 문자열 검색
+# 캄파일된 패턴 객체를 사용해 문자열 검색을 수행
+# match() : 문자열의 처음부터 정규식과 매치되는지 조사. 매치되면 match 객체를, 아니면 none 반환
+# search() : 문자열 전체를 검색해 정규식과 매치되는지 조사
+# findall() : 정규식과 매치되는 모든 문자열(substring)을 리스트로 반환
+# finditer() : 정규식과 매치되는 모든 문자열(substring)을 반복 가능한 객체로 반환
+# 사용 예
+# import re
+# p = re.compile('[a-z]+')
+#match()==================
+# m = p.match("python") # "python"은 정규식 '[a-z]+'에 부합. match객체 반환
+# print(m) # <re.Match object; span=(0, 6), match='python'>
+# m = p.match("3 python") # '[a-z]+'에 부합하지 않으니 None 반환
+# print(m) # <re.Match object; span=(0, 6), match='python'>
+# match()의 결과로 match객체 또는 none을 반환하기 때문에 파이썬 정규식 프로그램은 
+# p = re.compile(정규 표현식)
+# m = p.match("조사할 문자열")
+# if m:
+#   print('Match fround : ', m.group())
+# else:
+#   print('No match')
+# 이렇게 쓴다. match의 결과값이 있어야 그다음 작업을 수행하겠다는 뜻. 
+#match()==================
+#search()=================
+# import re
+# p = re.compile('[a-z]+')
+# m = p.search("python")# <re.Match object; span=(0, 6), match='python'> 출력.
+# print(m)
+# m = p.search("3 python")# <re.Match object; span=(2, 8), match='python'> 출력. 첫번째 문자는 3이지만 search는 문자열의 처음부터 검색하는 것이 아니라 문자열 전체를 검색하는 것이기에 3 이후의 "python" 문자열과 매치된다. 
+# print(m)
+#search()=================
+#findall()================
+# import re
+# p = re.compile('[a-z]+')
+# result = p.findall("life is too short")
+# print(result) # ['life', 'is', 'too', 'short']. 각 단어를 [a-z]+ 정규식과 매치해서 리스트로 반환
+# import re
+# p = re.compile('[a-z]+')
+# result = p.finditer("life is too short") # finditer()는 findall과 동일하지만 그 결과로 반복 가능한 객체(iterator object)를 돌려준다.
+# print(result) # <callable_iterator object at 0x7f88a800c310>
+# for r in result:
+#     print(r)
+# <re.Match object; span=(0, 4), match='life'> # 반복 가능한 객체가 포함하는 각각의 요소는 match 객체.
+# <re.Match object; span=(5, 7), match='is'>
+# <re.Match object; span=(8, 11), match='too'>
+# <re.Match object; span=(12, 17), match='short'>
+#findall()================
 
-#정규 표현식============================================================
+# 정규 표현식============================================================
     
