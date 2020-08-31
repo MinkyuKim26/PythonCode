@@ -1952,6 +1952,8 @@ a = 0
 # p = re.compile('[a-z]+')
 # result = p.findall("life is too short")
 # print(result) # ['life', 'is', 'too', 'short']. 각 단어를 [a-z]+ 정규식과 매치해서 리스트로 반환
+#findall()================
+#finditer()===============
 # import re
 # p = re.compile('[a-z]+')
 # result = p.finditer("life is too short") # finditer()는 findall과 동일하지만 그 결과로 반복 가능한 객체(iterator object)를 돌려준다.
@@ -1962,7 +1964,174 @@ a = 0
 # <re.Match object; span=(5, 7), match='is'>
 # <re.Match object; span=(8, 11), match='too'>
 # <re.Match object; span=(12, 17), match='short'>
-#findall()================
+#finditer()===============
+# match 객체의 메서드
+# group() : 매치된 문자열 반환
+# start() : 매치된 문자열의 시작 위치 반환
+# end() : 매치된 문자열의 끝 위치 반환
+# span() : 매치된 문자열의 (시작, 끝)에 해당하는 튜플을 반환
+# 예제
+# import re
+# p = re.compile('[a-z]+')
+# m = p.match("python")
+# print(m.group())# 'python'
+# print(m.start())# 0(시작 위치 : 0)
+# print(m.end())# 6(끝나는 위치 : 6)
+# print(m.span())# (0,6) - 시작 위치 0, 끝나는 위치 6
+# search 메서드 사용
+# import re
+# p = re.compile('[a-z]+')
+# m = p.search("3 python")
+# print(m.group())# 'python'
+# print(m.start())# 2(시작 위치 : 2)
+# print(m.end())# 8(끝나는 위치 : 8)
+# print(m.span())# (2,8) - 시작 위치 2, 끝나는 위치 8
+# 모듈 단위로 수행하기
+# p = re.compile('[a-z]+')
+# m = p.match("python") 대신
+# m = re.match('[a-z]+', "python")으로 간략하게 사용 가능
+# 컴파일 옵션
+# DOTALL(약어 : S), dot(.)이 줄바꿈 문자를 포함해 모든 문자와 매치
+# IGNORECASE(약어 : I), 대소문자에 관계 없이 매치
+# MULTILINE(약어 : M), 여러 줄과 매치(^, $메타 문자의 사용과 관계가 있는 옵션)
+# VERBOSE(약어 : X), verbose 모드를 사용(정규식을 보기 편하게 만들 수도 있고 주석 등을 사용할 수 있다.)
+# re.DOTALL 혹은 re.S로도 사용 가능
+# DOTALL, S
+# 기존의 메타문자는 줄바꿈 문자(\n)을 제외한 모든 문자와 매치된다느 규칙이 있었다.
+# 허나 re.DOTALL 또는 re.S 옵션을 사용할 경우 \n도 포함하여 매치 가능하다.
+# 예시
+# import re
+# p = re.compile('a.b')
+# m = p.match('a\nb')
+# print(m)# none 출력. \n은 메타 문자 .와 매치 X
+# \n도 매치
+# import re
+# p = re.compile('a.b', re.DOTALL)
+# m = p.match('a\nb')
+# print(m)# <re.Match object; span=(0, 3), match='a\nb'>
+# re.DOTALL 옵션은 여러 줄로 이루어진 문자열에서 \n에 상관없이 검색할 때 많이 사용한다.
+# IGNORECASE, I
+# 대, 소문자 구별 없이 매치를 수행할 때 사용하는 옵션
+# import re
+# p = re.compile('[a-z]', re.I)# 영어만 들어갔는지 검사. 
+# print(p.match('python'))# <re.Match object; span=(0, 1), match='p'>
+# print(p.match('Python'))# <re.Match object; span=(0, 1), match='P'>
+# print(p.match('PYTHON'))# <re.Match object; span=(0, 1), match='P'>
+# 대, 소문자에 관계없이 매치된다.
+# MULTILINE, M
+# 메타 문자 ^, $와 연관된 옵션. ^는 문자열의 처음, $는 문자열의 마지막을 의미. 
+# 예를 들어 '^python'인 경우 문자열의 처음은 항상 python으로 시작해야 매치, 'python$'인 경우 문자열의 마지막은 항상 python으로 끝나야 매치
+# 예시
+# import re
+# p = re.compile("^python\s\w+")# python으로 시작, 그 뒤에 whitespace(스페이스 공백), 그 뒤에 단어가 와야 한다는 의미
+# data = """python one
+# life is too short
+# python two
+# you need python
+# python three"""
+# print(p.findall(data))# 정규식과 매치되는 모든 문자열(substring)을 리스트로 반환
+# ['python one'] 출력. ^메타문자(처음에 python으로 시작하는 문자열만 매치)로 인해 python one만 출력
+# ^메타 문자를 각 라인의 처음으로 인식시키고 싶을 때 re.MULTILNE 또는 re.M 사용.
+# import re
+# p = re.compile("^python\s\w+", re.MULTILINE)# python으로 시작, 그 뒤에 whitespace(스페이스 공백), 그 뒤에 단어가 와야 한다는 의미
+# data = """python one
+# life is too short
+# python two
+# you need python
+# python three"""
+# print(p.findall(data))# ['python one', 'python two', 'python three'] 출력
+# VERBOSE, X
+# 정규식을 주석 또는 줄 단위로 구분할 때 사용
+# import re
+# charref = re.compile(r'&[#](0[0-7]+|[0-9]+|x[0-9a-fA-F]+);')
+# 얘는 이해하기 어렵다.
+# charref = re.compile(r"""
+# &[#]
+# (
+#     0[0-7]+     # Octal form
+#     | [0-9]+    # Decimal form
+#     | x[0-9a-fA-F]  #Hexadecimal form
+# )
+# ;
+# """, re.VERBOSE)
+# 정규식이 복잡할 경우 주석을 적고 여러 줄로 표현하는 것이 가독성이 좋다. 
+# re.VERBOSE 옵션을 사용하면 문자열에 사용된 whitespace는 컴파일할 때 제거된다.([]안에 쓰인 whitespace는 제거되지 않는다.)
+# 그리고 줄단위로 주석을 달 수 있다.
+# 백슬래시 문제
+# 'section' 문자열을 찾기 위한 정규식 만들기
+# \section이라고만 치면 \s가 whitespace로 인식되어 의도한 대로 매치가 이루어지지 않는다. 
+# 그래서 \\section과 같이 쳐야한다. \문자가 문자열 자체임을 알려주기 위해 백슬래시 2개를 사용.
+# import re
+# p = re.compile('\\section')# 이렇게 쳐야한다.
+# 허나 이렇게 하면 파이썬 정규식 엔진에는 \\ -> \이 되어 \section이 전달된다.
+# 그래서 \\\\section으로 해야하지만 이는 복잡하다. 
+# 이러한 문제를 해결하기 위해 Raw String 규칙이 생겨났고 이는
+# import re
+# p = re.compile(r'\\section')# 이렇게 앞에 r을 치면 된다. Raw String 규칙에 의해 백슬래시를 1개만 써도 2개를 쓴 것과 동일한 의미를 가진다.
+# 문자열을 소비시키지 않는 메타 문자(zero-width assertions 메타 문자)
+# 1. | : or과 동일한 의미
+# import re
+# p = re.compile('Crow|Servo')
+# m = p.match('CrowHello')
+# print(m)# <re.Match object; span=(0, 4), match='Crow'> 출력
+# 2. ^ : 문자열의 맨처음
+# import re
+# print(re.search('^Life', "Life is too short"))# <re.Match object; span=(0, 4), match='Life'>
+# print(re.search('^Life', 'My Life'))# None 출력. Life가 처음에 오는 경우가 아니면 None을 반환
+# 3. $ : 문자열의 맨끝
+# import re
+# print(re.search('short$', 'Life is too short'))# None
+# print(re.search('short$', 'Life is too short, you need python'))# <re.Match object; span=(12, 17), match='short'>
+# short로 끝난 경우에만 매치
+# ^와 $를 문자 그자체로 매치하고 싶은 경우에는 [^], [$] 또는 \^, \$로 사용하면 된다.
+# 4. \A : 문자열의 처음과 매치. ^ 메타문자는 re.MULTILINE을 사용할 경우 각 줄의 문자열의 처음과 매치되지만 \A는 줄과 상관없이 전체 문자열의 처음하고만 매치
+# 5. \Z : 문자열의 끝과 매치. $ 메타문자는 re.MULTILINE을 사용할 경우 각 줄의 문자열의 끝과 매치되지만 \Z는 줄과 상관업이 전체 문자열의 끝하고만 매치
+# 6. \b : 단어 구분자(Word boundary). 보통 단어는 whitespace에 의해 구분
+# import re
+# p = re.compile(r'\bclass\b')
+# print(p.search('no class at all'))# <re.Match object; span=(3, 8), match='class'>
+#'\bclass\b' 정규식은 앞뒤가 whitespace로 구분된 class라는 단어와 매치
+# import re
+# p = re.compile(r'\bclass\b')
+# print(p.search('the declassified algorithm'))# None출력. 안에 class문자열이 있지만 양 옆에 공백이 없으므로 매치 X
+# 7. \B. \b와 반대의 경우. whitespace로 구분된 단어가 아닌 경우에만 매치
+# import re
+# p = re.compile(r'\Bclass\B')
+# print(p.search('no class at all'))# None
+# print(p.search('the declassified algorithm'))# <re.Match object; span=(6, 11), match='class'>
+# print(p.search('our subclass is'))# None. class의 뒤에 공백이 있어서 매치X
+# 그루핑
+# import re
+# p = re.compile(r"(\w+)\s+\d+[-]\d+[-]\d+")# 이름 부분만 출력. \w+ 부분을 (\w+)로 만들면 구르핑된 부분의 문자열만 출력
+# m = p.search("park 010-1234-1234")
+# print(m.group(1))# park 출력
+# group(0) : 매치된 전체 문자열
+# group(1) : 첫번째 그룹에 해당하는 문자열
+# group(2) : 두번째 그룹에 해당하는 문자열
+# group(3) : 세번째 그룹에 해당하는 문자열
+# import re
+# p = re.compile(r"(\w+)\s+(\d+[-]\d+[-]\d+)")# \d+[-]\d+[-]\d+ 그루핑
+# m = p.search("park 010-1234-1234")
+# print(m.group(2))# 010-1234-1234 출력.
+#국번만 출력
+# import re
+# p = re.compile(r"(\w+)\s+((\d+)[-]\d+[-]\d+)")# \d+[-]\d+[-]\d+ 속에 \d+을 또 그루핑.
+# m = p.search("park 010-1234-1234")
+# print(m.group(3))# 010 출력
+# 그루핑된 문자열 재참조
+# import re
+# p = re.compile(r'(\b\w+)\s+\1')# \1 : 재참조 메타 문자. 정규식의 그룹 중 첫 번째 그룹을 가리킴. 즉, '(\b\w+)\s+\(\b\w+)'과 같다고 본다.
+# print(p.search('Paris in the the spring').group())# 'the the' 출력
+# 그루핑된 문자열에 이름 붙히기
+# import re
+# p = re.compile(r"(?P<name>\w+)\s+((\d+)[-]\d+[-]\d+)")# (\w+) 그룹에 name이란 이름을 붙힘. 여기서 ?... 표현식은 정규 표현식의 확장 구문이며 이는 강력한 힘을 갖고있다. 
+# m = p.search("park 010-1234-1234") # 이름 작성의 확장 구문 : (?P<그룹 이름>...)
+# print(m.group("name"))# park 출력
+# 정규식 안에서 재참조
+# import re
+# p = re.compile(r'(?P<word>\b\w+)\s+(?P=word)')# 재참조를 할 때 (?P=그룹 이름)이라는 확장 구문 사용
+# print(p.search('paris in the the spring').group())# the the 출력
+# 전방 탐색(Lookahead Assertions)
 
 # 정규 표현식============================================================
     
