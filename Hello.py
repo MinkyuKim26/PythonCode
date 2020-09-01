@@ -437,9 +437,9 @@ Practice code
 # print(b)
 # #딕셔너리 안에 찾으려는 key값이 없을 경우 미리 정해준 디폴트값을 대신 가져오게 할 수 있다. 
 # b = a.get('foo', 'bar')
-# print(b)#'bar' 출력
-#해당 key가 딕셔러니 안에 있는지 조사
-# b = 'name' in a#'name'키가 있는지 조사('키' in '딕셔너리')
+# print(b) #'bar' 출력
+# 해당 key가 딕셔러니 안에 있는지 조사
+# b = 'name' in a #'name'키가 있는지 조사('키' in '딕셔너리')
 # print(b)#있으니 true 출력
 # b = 'email' in a
 # print(b)#없으니 false 출력
@@ -2132,6 +2132,69 @@ a = 0
 # p = re.compile(r'(?P<word>\b\w+)\s+(?P=word)')# 재참조를 할 때 (?P=그룹 이름)이라는 확장 구문 사용
 # print(p.search('paris in the the spring').group())# the the 출력
 # 전방 탐색(Lookahead Assertions)
-
+# import re
+# p = re.compile(".+:")#:로 끝나는 모든 것
+# m = p.search("http://google.com")
+# print(m.group())# http: 출력
+# 여기서 'http'만 출력하려면? -> 이럴때 사용하는 것이 바로 전방 탐색
+# 전방 탐색==============================================
+# 긍정과 부정의 2종류가 있다. 
+# (?=...) : 긍정형 전방 탐색(...에 해당하는 정규식과 매치되어야 하며 조건이 통과되어도 문자열이 소비되지 않는다.)
+# (?!...) : 부정형 전방 탐색(...에 해당하는 정규식과 매치되지 않아야 하며 조건이 통과 되어도 문자열이 소비되지 않는다.)
+# 긍정형 전방 탐색
+# 예시
+# import re
+# p = re.compile(".+(?=:)")#:에 해당하는 부분에 긍정형 전방 탐색 기법 적용. :에 해당하는 문자열이 정규식 엔진에 의해 소비되지 않아(검색에는 포함, 검색 결과에는 제외) :이 제거된 값을 반환
+# m = p.search("http://google.com")
+# print(m.group())# http출력
+# .*[.].*$ : '파일이름 + . + 확장자'를 나타내는 정규식. foo.bar, autoexec.bat, sendmail.cf같은 형식의 파일과 매치
+# .*[.][^b].*$ : 확장자가 b라는 문자로 시작하면 안된다는 의미. 이 정규식은 foo.bar과 같은 파일도 걸러낸다. 이는
+# .*[.]([^b]..|.[^a].|..[^t])$ : 첫번째 문자가 b가 아니거나 두번째 문자가 a가 아니거나 세번째 문자가 t가 아닌 경우. 이 경우 foo.bar는 제외. 허나 이런 경우에 sendmai.cf같이 확장자의 문자 개수가 2개인 케이스를 포함하지 못하는 오작동을 한다. 그렇기에
+# .*[.]([^b].?.?|.[^a]?.?|..?[^t]?)$ : 확장자의 문자 개수가 2개여도 통과되는 정규식. 허나 갈수록 복잡해짐. 
+# 이러한 경우를 간단하게 해결하기 위해 있는게 바로 부정형 전방 탐색. 위 예를 부정형 전방 탐색을 이용해
+# .*[.](?!bat$).*$ 와 같이 간단하게 표현할 수 있다. 이는 확장자가 bat이 아닌 경우에만 통과 시킨다는 의미다. 
+# exe도 제외하라는 조건을 추가하면 .*[.](?!bat$|exe$).*$ 와 같이 된다.
+# 긍정, 부정형 전방 탐색====================================
+# 문자열 바꾸기============================================
+# import re
+# p = re.compile('(blue|white|red)')
+# print(p.sub('colour', 'blue socks and red shoes', count=1))# colour socks and red shoe 출력
+# sub(바꿀 문자열, 대상 문자열, 바꾸기 횟수) <-바꾸기 횟수는 넣어도 되고 안넣어도 됨
+# '대상 문자열'에 정규식에 매치되는 문자열을 '바꿀 문자열'로 바꾼다.
+# subn 메서드 : sub와 동일한 기능을 하지만 튜플로 반환한다. (변경된 문자열, 바꾸기가 발생한 횟수)
+# 예제
+# import re
+# p = re.compile('(blue|white|red)')
+# print(p.subn('colour', 'blue socks and red shoes'))# ('colour socks and colour shoes', 2) 출력
+# sub 매서드를 사용할 때 참조 구문 사용하기
+# '이름 + 전화번호'를 '전화번호 + 이름'으로 바꾸는 예.'\g<그룹 이름>'을 사용하면 정규식의 그룹 이름을 참조할 수 있게 된다.
+# import re
+# p = re.compile(r"(?P<name>\w+)\s+(?P<phone>(\d+)[-]\d+[-]\d+)")
+# print(p.sub("\g<phone> \g<name>", "park 010-1234-1234"))
+# 그룹 이름 대신 참조 번호를 사용해도 같은 결과 반환
+# import re
+# p = re.compile(r"(?P<name>\w+)\s+(?P<phone>(\d+)[-]\d+[-]\d+)")
+# print(p.sub("\g<2> \g<1>", "park 010-1234-1234"))#<name> <phone> 구조에 매치되는 문자열을 <phone> <name>으로 바꿔줌. 010-1234-1234 park 출력
+# sub 매서드의 매개변수로 함수 넣기
+# import re
+# def hexrepl(match):
+#     value = int(match.group())
+#     return hex(value)
+# p = re.compile(r'\d+')
+# print(p.sub(hexrepl, 'Call 65490 for printing, 49152 for user code'))# Call 0xffd2 for printing, 0xc000 for user code 출력
+# Call...문자열에 p에 매치되는 문자열을 hexrepl(match)에 match로 넣은 뒤 반환된 값을 match로 들어간 문자열과 교체
+# 문자열 바꾸기============================================
+# Greedy vs Non-Greedy==================================
+# import re
+# s = '<html><head><title><Title></title>'
+# print(re.match('<.*>', s).span())# (0, 34), span() : 매치된 문자열의 (시작, 끝)에 해당하는 튜플을 반환
+# print(re.match('<.*>', s).group())# <html><head><title><Title></title>. 반환할 수 있는 최대 문자열 반환.
+# non-greedy 문자 ?를 사용하면 모든 값이 반환되는 걸 막을 수 있다. 
+# import re
+# s = '<html><head><title><Title></title>'
+# print(re.match('<.*?>', s).group())# <html>
+# non-greedy 문자인 ?는 *? +? ?? {m,n}?와 같이 사용할 수 있다. 가장 최소한의 반복을 수행하도록 도와주는 역할을 한다. 
+# Greedy vs Non-Greedy==================================
 # 정규 표현식============================================================
+# 코딩 면허 시험==========================================================
     
