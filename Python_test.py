@@ -154,9 +154,67 @@
 #     return result_str
 
 # print(DashInsert(4546793))
-#문제14(문자열 압축) -> 복습
+#문제14(문자열 압축)
+# def zip_str(str_input):
+#     alpha_check = ''
+#     alpha_count = 0
+#     all_str_count = 0
+#     return_str = ''
+#     for chr in str_input:
+#         if alpha_check == '' :# 맨처음
+#             alpha_check = chr
+#             alpha_count=1
+#         elif alpha_check == chr:# 연속해서 문자가 나올 경우
+#             alpha_count+=1
+#             if all_str_count == len(str_input) - 1:
+#                 return_str += alpha_check + str(alpha_count)
+#         elif alpha_check != chr:# 아닐 경우
+#             return_str += alpha_check + str(alpha_count)
+#             alpha_check = chr# 체크 문자 변경
+#             alpha_count = 1# 카운트 초기화
+#             if all_str_count == len(str_input) - 1:
+#                 return_str += alpha_check + str(alpha_count)
+#         all_str_count +=1
+
+#     return return_str 
+
+# print(zip_str('aaabbcccccca'))
+
+#문제15(숫자 0~9까지 모두 하나씩 썼는지 검사)
+import re
+
+p = re.compile('[0-9]')
+
+def check_str(num_list):
+    return_str = ''
+    for num in num_list:
+        check_num = [0,0,0,0,0,0,0,0,0,0]
+        isSatisfy = True
+        for num_chr in num:
+            check_num[int(num_chr)] +=1
+
+        for check_n in check_num:
+            if check_n != 1 : isSatisfy = False
+
+        if(isSatisfy == True):
+            return_str += "true "
+        else:
+            return_str += "false "
+        
+    return return_str
+
+num_input = input("숫자를 입력하세요 : ")
+
+num_list = list(num_input.split())
+num_list_forUse = list()
+
+for num in num_list:
+    isNum = True
+    for num_chr in num:
+        if p.match(num_chr) is None:
+            isNum = False
+    if(isNum == True):
+        num_list_forUse.append(num)
 
 
-                
-
-
+print(check_str(num_list_forUse))
