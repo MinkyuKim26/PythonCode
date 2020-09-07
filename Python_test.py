@@ -181,40 +181,171 @@
 # print(zip_str('aaabbcccccca'))
 
 #문제15(숫자 0~9까지 모두 하나씩 썼는지 검사)
-import re
+# def check_str(num_list):
+#     return_str = ''
+#     for num in num_list:
+#         check_num = [0,0,0,0,0,0,0,0,0,0]
+#         isSatisfy = True
+#         for num_chr in num:
+#             check_num[int(num_chr)] +=1
 
-p = re.compile('[0-9]')
+#         for check_n in check_num:
+#             if check_n != 1 : isSatisfy = False
 
-def check_str(num_list):
-    return_str = ''
-    for num in num_list:
-        check_num = [0,0,0,0,0,0,0,0,0,0]
-        isSatisfy = True
-        for num_chr in num:
-            check_num[int(num_chr)] +=1
-
-        for check_n in check_num:
-            if check_n != 1 : isSatisfy = False
-
-        if(isSatisfy == True):
-            return_str += "true "
-        else:
-            return_str += "false "
+#         if(isSatisfy == True):
+#             return_str += "true "
+#         else:
+#             return_str += "false "
         
-    return return_str
+#     return return_str
 
-num_input = input("숫자를 입력하세요 : ")
+# num_input = input("숫자를 입력하세요 : ")
 
-num_list = list(num_input.split())
-num_list_forUse = list()
+# num_list = list(num_input.split())
+# num_list_forUse = list()
 
-for num in num_list:
-    isNum = True
-    for num_chr in num:
-        if p.match(num_chr) is None:
-            isNum = False
-    if(isNum == True):
-        num_list_forUse.append(num)
+# for num in num_list:
+#     isNum = True
+#     for num_chr in num:
+#         if p.match(num_chr) is None:
+#             isNum = False
+#     if(isNum == True):
+#         num_list_forUse.append(num)
 
+# print(check_str(num_list_forUse))
 
-print(check_str(num_list_forUse))
+#문제16(모스 부호 해독)
+# import re
+
+# p = re.compile("[.]*[-]*[.]*[-]*\s*")# 글자 or 단어
+
+# def translate_chr(mos_chr):
+#     return_chr = ''
+
+#     if mos_chr == '.-':
+#         return_chr = 'A'
+#     elif mos_chr == '-...':
+#         return_chr = 'B'
+#     elif mos_chr == '-.-.':
+#         return_chr = 'C'
+#     elif mos_chr == '-..':
+#         return_chr = 'D'
+#     elif mos_chr == '.':
+#         return_chr = 'E'
+#     elif mos_chr == '..-.':
+#         return_chr = 'F'
+#     elif mos_chr == '--.':
+#         return_chr = 'G'
+#     elif mos_chr == '....':
+#         return_chr = 'H'
+#     elif mos_chr == '..':
+#         return_chr = 'I'
+#     elif mos_chr == '.---':
+#         return_chr = 'J'
+#     elif mos_chr == '-.-':
+#         return_chr = 'K'
+#     elif mos_chr == '.-..':
+#         return_chr = 'L'
+#     elif mos_chr == '--':
+#         return_chr = 'M'
+#     elif mos_chr == '-.':
+#         return_chr = 'N'
+#     elif mos_chr == '---':
+#         return_chr = 'O'
+#     elif mos_chr == '.--.':
+#         return_chr = 'P'
+#     elif mos_chr == '--.-':
+#         return_chr = 'Q'
+#     elif mos_chr == '.-.':
+#         return_chr = 'R'
+#     elif mos_chr == '...':
+#         return_chr = 'S'
+#     elif mos_chr == '-':
+#         return_chr = 'T'
+#     elif mos_chr == '..-':
+#         return_chr = 'U'
+#     elif mos_chr == '...-':
+#         return_chr = 'V'
+#     elif mos_chr == '.--':
+#         return_chr = 'W'
+#     elif mos_chr == '-..-':
+#         return_chr = 'X'
+#     elif mos_chr == '-.--':
+#         return_chr = 'Y'
+#     elif mos_chr == '--..':
+#         return_chr = 'Z'
+    
+#     return return_chr
+
+# def translate_str(mos_str):
+#     nor_str = ''
+#     for str_part in mos_str:
+#         str_b1 = re.match('[.]*[-]*[.]*[-]*\s{1}', str_part)
+#         str_b2 = re.match('[.]*[-]*[.]*[-]*\s{2}', str_part)
+#         if str_b1 is not None and str_b2 is None:
+#             nor_str += translate_chr(str_part.strip())
+#         elif str_b2 is not None:
+#             nor_str += translate_chr(str_part.strip())
+#             nor_str += ' '
+
+#     return nor_str
+
+# m = p.findall('.... .  ... .-.. . . .--. ...  . .- .-. .-.. -.--')
+# m.pop()
+# m[len(m) - 1] +=' '
+# print(m)
+# print(translate_str(m))
+
+#문제17(기초 메타 문자)
+# import re
+# p = re.compile('a[.]{3,}b')
+# m = p.match('acccb')
+# print(m)
+# m = p.match('a....b')# 정답
+# print(m)
+# m = p.match('aaab')
+# print(m)
+# m = p.match('a.cccb')
+# print(m)
+
+#문제18(문자열 검색)
+# import re
+# p = re.compile("[a-z]+")
+# m = p.search("5 python")
+# print(m.start() + m.end()) #3(p의 위치) + 7(n의 위치) -> 파이썬은 시작 위치가 1인듯 하다. 
+
+#문제19(그루핑)
+# import re
+# p = re.compile(r"\w+\s+\d+[-]\d+[-](\d+)") # 그루핑 한거만 추출
+# r = re.compile(r"\w+\s+\d+[-]\d+[-]\d+") # 전체 문자열 추출
+# str_input = """park 010-9999-9988
+#     kim 010-9909-7789
+#     lee 010-8789-7768"""
+
+# m = p.findall(str_input)
+# n = r.findall(str_input)
+# print(m)
+# print(n)
+
+# lst_last_num = list(m)
+# lst_str = list(n)
+
+# for_count = 0
+# output_str = ''
+# for str_oneLine in lst_str:
+#     edit_str = lst_str[for_count].replace(lst_last_num[for_count], '####')
+#     output_str += edit_str
+#     for_count+=1
+#     output_str += '\n'
+
+# print(output_str)
+
+#문제20(전방 탐색)
+# import re
+# p = re.compile('.*[@].*[.](?=net$|com$).*$')# 검색 결과에 net, com이 안나와서 .$를 붙혀줬음.
+# email_list = ['park@naver.com', 'kim@daum.net', 'lee@myhome.co.kr']
+
+# for email in email_list:
+#     m = p.search(email)
+#     if m is not None :
+#         print(m)
