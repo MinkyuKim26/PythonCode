@@ -406,6 +406,23 @@
   },
   {
    "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "stream",
+     "name": "stdout",
+     "text": [
+      "2.4.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(tf.__version__) # 텐서플로우 2.4부터 맥북도 gpu사용을 지원한다. 이거 아니었으면 m1갈려고 별지랄 다했을거 같다."
+   ]
+  },
+  {
+   "cell_type": "code",
    "execution_count": null,
    "metadata": {},
    "outputs": [],
